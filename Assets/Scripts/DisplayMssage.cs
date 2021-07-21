@@ -6,10 +6,19 @@ using UnityEngine.UI;
 public class DisplayMssage : MonoBehaviour
 {
     /// <summary>
+    /// 名前ウィンドウ
+    /// </summary>
+    [SerializeField]
+    private Text nameWindow = default;
+
+    /// <summary>
     /// メッセージウィンドウ
     /// </summary>
     [SerializeField]
     private Text messageWindow = default;
+
+    private int index = 0;
+    private Senario senario = default;
 
     /// <summary>
     /// 文字表示速度
@@ -24,18 +33,45 @@ public class DisplayMssage : MonoBehaviour
 
     void Start()
     {
+
+        string json = Resources.Load<TextAsset>("Json/HelloSenario").ToString();
+        senario = JsonUtility.FromJson<Senario>(json);
+        
         messageWindow.text = "";
+        nameWindow.text = "";
 
-        string jsonMessage = "ハロー　RerykA";
-        charQueue = SeparateString(jsonMessage);
+        // Content content = senario.content[0];
 
-        // 文字表示のテスト
-        StartCoroutine(ShowMessage(captionSpeed));
+        // nameWindow.text = content.characterName;
+
+        SetContent();
+
+        // string jsonMessage = content.message;
+        // charQueue = SeparateString(jsonMessage);
+
+        // // 文字表示のテスト
+        // StartCoroutine(ShowMessage(captionSpeed));
     }
 
     void Update()
     {
+        
+    }
 
+    private void SetContent()
+    {
+        Content content = senario.content[index];
+
+        if(!string.IsNullOrEmpty(content.characterName)){
+            nameWindow.text = content.characterName;
+        }
+
+        if(!string.IsNullOrEmpty(content.message)){
+            charQueue = SeparateString(content.message);
+
+            // 文字表示のテスト
+            StartCoroutine(ShowMessage(captionSpeed));
+        }
     }
 
     /// <summary>
@@ -54,15 +90,6 @@ public class DisplayMssage : MonoBehaviour
     }
 
     /// <summary>
-    /// 1文字ずつ表示する
-    /// </summary>
-    private bool OutputChar(){
-        if(charQueue.Count <= 0)return false;
-        messageWindow.text += charQueue.Dequeue();
-        return true;
-    }
-
-    /// <summary>
     /// メッセージ表示
     /// </summary>
     /// <param name="wait">待機時間</param>
@@ -72,5 +99,12 @@ public class DisplayMssage : MonoBehaviour
         yield break;
     }
 
-
+    /// <summary>
+    /// 1文字ずつ表示する
+    /// </summary>
+    private bool OutputChar(){
+        if(charQueue.Count <= 0)return false;
+        messageWindow.text += charQueue.Dequeue();
+        return true;
+    }
 }

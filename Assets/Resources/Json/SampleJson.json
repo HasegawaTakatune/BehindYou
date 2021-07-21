@@ -1,0 +1,118 @@
+{
+    "name": "ScenarioName",
+    "content": [
+        {
+            "id": "1",
+            "message": "メッセージ１",
+            "choices": [
+                {
+                    "name": "食べる",
+                    "scenario": "eate_scenario",
+                    "parameter": "1"
+                },
+                {
+                    "name": "遊ぶ",
+                    "scenario": "play_scenario",
+                    "parameter": "2"
+                },
+                {
+                    "name": "寝る",
+                    "scenario": "sleep_scenario",
+                    "parameter": "1"
+                }
+            ],
+            "background": "background_001.png",
+            "character": {
+                "image": "character_001.png",
+                "position": "0, 0, 0",
+                "rotate": "0, 0, 0, 0",
+                "size": "1, 1, 1",
+                "color": "1, 1, 1, 1",
+                "animation": "animationFile"
+            },
+            "BGM": "bgm_001.mp3",
+            "SE": "se_001.mp3",
+            "scenario": "JumpScenario",
+            "scene": "NextScene"
+        },
+        {
+            "id": "2",
+            "message": "メッセージ２",
+            "choices": [
+                {
+                    "name": "食べる",
+                    "scenario": "eate_scenario",
+                    "parameter": "1"
+                },
+                {
+                    "name": "遊ぶ",
+                    "scenario": "play_scenario",
+                    "parameter": "2"
+                },
+                {
+                    "name": "寝る",
+                    "scenario": "sleep_scenario",
+                    "parameter": "1"
+                }
+            ],
+            "background": "background_002.png",
+            "character": {
+                "image": "character_002.png",
+                "position": "0, 0, 0",
+                "rotate": "0, 0, 0, 0",
+                "size": "1, 1, 1",
+                "color": "1, 1, 1, 1",
+                "animation": "animationFile"
+            },
+            "BGM": "bgm_002.mp3",
+            "SE": "se_002.mp3",
+            "scenario": "JumpScenario",
+            "scene": "NextScene"
+        },
+        {
+            "id": "3",
+            "message": "メッセージ３",
+            "choices": [
+                {
+                    "name": "食べる",
+                    "scenario": "eate_scenario",
+                    "parameter": "1"
+                },
+                {
+                    "name": "遊ぶ",
+                    "scenario": "play_scenario",
+                    "parameter": "2"
+                },
+                {
+                    "name": "寝る",
+                    "scenario": "sleep_scenario",
+                    "parameter": "1"
+                }
+            ],
+            "background": "background_003.png",
+            "character": {
+                "image": "character_003.png",
+                "position": "0, 0, 0",
+                "rotate": "0, 0, 0, 0",
+                "size": "1, 1, 1",
+                "color": "1, 1, 1, 1",
+                "animation": "animationFile"
+            },
+            "BGM": "bgm_003.mp3",
+            "SE": "se_003.mp3",
+            "scenario": "JumpScenario",
+            "scene": "NextScene"
+        },
+        {
+            "id": "4",
+            "message": "メッセージ４"
+        },
+        {
+            "id": "5",
+            "message": "メッセージ５",
+            "character": {
+                "image": "character_005.png"
+            }
+        }
+    ]
+}
