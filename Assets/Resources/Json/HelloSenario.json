@@ -40,6 +40,15 @@
             "id": "2",
             "characterName": "RerykA Mix",
             "message": "こんにちわ皆さん"
+        },
+        {
+            "id": "3",
+            "message": "無名の誰かが話している。"
+        },
+        {
+            "id": "4",
+            "characterName": "RerykA Mix",
+            "message": "終わります。"
         }
     ]
 }

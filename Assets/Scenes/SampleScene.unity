@@ -714,7 +714,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameWindow: {fileID: 1041646225}
+  namePanel: {fileID: 971909071}
   messageWindow: {fileID: 788412695}
+  messagePanel: {fileID: 1122866381}
   captionSpeed: 0.2
 --- !u!4 &1360309779
 Transform:

@@ -12,12 +12,31 @@ public class DisplayMssage : MonoBehaviour
     private Text nameWindow = default;
 
     /// <summary>
+    /// 名前パネル
+    /// </summary>
+    [SerializeField]
+    private GameObject namePanel = default;
+
+    /// <summary>
     /// メッセージウィンドウ
     /// </summary>
     [SerializeField]
     private Text messageWindow = default;
 
+    /// <summary>
+    /// メッセージパネル
+    /// </summary>
+    [SerializeField]
+    private GameObject messagePanel = default;
+
+    /// <summary>
+    /// コンテンツインデックス
+    /// </summary>
     private int index = 0;
+
+    /// <summary>
+    /// シナリオの保存
+    /// </summary>
     private Senario senario = default;
 
     /// <summary>
@@ -36,37 +55,42 @@ public class DisplayMssage : MonoBehaviour
 
         string json = Resources.Load<TextAsset>("Json/HelloSenario").ToString();
         senario = JsonUtility.FromJson<Senario>(json);
-        
-        messageWindow.text = "";
-        nameWindow.text = "";
-
-        // Content content = senario.content[0];
-
-        // nameWindow.text = content.characterName;
 
         SetContent();
-
-        // string jsonMessage = content.message;
-        // charQueue = SeparateString(jsonMessage);
-
-        // // 文字表示のテスト
-        // StartCoroutine(ShowMessage(captionSpeed));
     }
 
     void Update()
     {
-        
+        if(Input.GetMouseButtonDown(0))
+        {
+            Debug.Log(charQueue.Count);
+            if(0 < charQueue.Count) OutputAllChar();
+            else
+            {
+                index++;
+                SetContent();
+            }
+        }
     }
 
+    /// <summary>
+    /// コンテンツ設定
+    /// </summary>
     private void SetContent()
     {
+        messageWindow.text = "";
+        nameWindow.text = "";
+        
         Content content = senario.content[index];
 
-        if(!string.IsNullOrEmpty(content.characterName)){
+        if(content.IsSetCharacterName()){
             nameWindow.text = content.characterName;
+            namePanel.SetActive(true);
+        }else{
+            namePanel.SetActive(false);
         }
 
-        if(!string.IsNullOrEmpty(content.message)){
+        if(content.IsSetMessage()){
             charQueue = SeparateString(content.message);
 
             // 文字表示のテスト
@@ -94,7 +118,8 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     /// <param name="wait">待機時間</param>
     /// <returns>遅延</returns>
-    private IEnumerator ShowMessage(float wait){
+    private IEnumerator ShowMessage(float wait)
+    {
         while(OutputChar())yield return new WaitForSeconds(wait);
         yield break;
     }
@@ -102,9 +127,19 @@ public class DisplayMssage : MonoBehaviour
     /// <summary>
     /// 1文字ずつ表示する
     /// </summary>
-    private bool OutputChar(){
+    private bool OutputChar()
+    {
         if(charQueue.Count <= 0)return false;
         messageWindow.text += charQueue.Dequeue();
         return true;
+    }
+
+    /// <summary>
+    /// 全文表示する
+    /// </summary>
+    private void OutputAllChar()
+    {
+        StopCoroutine(ShowMessage(captionSpeed));
+        while(OutputChar());
     }
 }
