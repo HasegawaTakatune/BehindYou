@@ -35,9 +35,14 @@ public class DisplayMssage : MonoBehaviour
     private int index = 0;
 
     /// <summary>
+    /// 章の保存
+    /// </summary>
+    private Chapter chapter = default;
+
+    /// <summary>
     /// シナリオの保存
     /// </summary>
-    private Senario senario = default;
+    private Scenario scenario = default;
 
     /// <summary>
     /// 文字表示速度
@@ -53,8 +58,9 @@ public class DisplayMssage : MonoBehaviour
     void Start()
     {
 
-        string json = Resources.Load<TextAsset>("Json/HelloSenario").ToString();
-        senario = JsonUtility.FromJson<Senario>(json);
+        string json = Resources.Load<TextAsset>("Json/HelloScenario").ToString();
+        chapter = JsonUtility.FromJson<Chapter>(json);
+        scenario = chapter.scenario[0];
 
         SetContent();
     }
@@ -63,7 +69,6 @@ public class DisplayMssage : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            Debug.Log(charQueue.Count);
             if(0 < charQueue.Count) OutputAllChar();
             else
             {
@@ -80,17 +85,21 @@ public class DisplayMssage : MonoBehaviour
     {
         messageWindow.text = "";
         nameWindow.text = "";
-        
-        Content content = senario.content[index];
 
-        if(content.IsSetCharacterName()){
+        Content content = scenario.content[index];
+
+        if (content.IsSetCharacterName())
+        {
             nameWindow.text = content.characterName;
             namePanel.SetActive(true);
-        }else{
+        }
+        else
+        {
             namePanel.SetActive(false);
         }
 
-        if(content.IsSetMessage()){
+        if (content.IsSetMessage())
+        {
             charQueue = SeparateString(content.message);
 
             // 文字表示のテスト
@@ -120,7 +129,7 @@ public class DisplayMssage : MonoBehaviour
     /// <returns>遅延</returns>
     private IEnumerator ShowMessage(float wait)
     {
-        while(OutputChar())yield return new WaitForSeconds(wait);
+        while (OutputChar()) yield return new WaitForSeconds(wait);
         yield break;
     }
 
@@ -129,7 +138,7 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     private bool OutputChar()
     {
-        if(charQueue.Count <= 0)return false;
+        if (charQueue.Count <= 0) return false;
         messageWindow.text += charQueue.Dequeue();
         return true;
     }
@@ -140,6 +149,6 @@ public class DisplayMssage : MonoBehaviour
     private void OutputAllChar()
     {
         StopCoroutine(ShowMessage(captionSpeed));
-        while(OutputChar());
+        while (OutputChar()) ;
     }
 }

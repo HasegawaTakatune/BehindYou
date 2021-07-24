@@ -2,7 +2,16 @@ using System;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Senario
+public class Chapter
+{
+    // メンバ変数
+    public string title;
+
+    public Scenario[] scenario;
+}
+
+[System.Serializable]
+public class Scenario
 {
     // メンバ変数
     private int length = -1;
