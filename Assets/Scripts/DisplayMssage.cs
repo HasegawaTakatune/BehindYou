@@ -35,6 +35,19 @@ public class DisplayMssage : MonoBehaviour
     private int index = 0;
 
     /// <summary>
+    /// 選択肢パネル
+    /// </summary>
+    [SerializeField]
+    private GameObject choicesPanel = default;
+
+    /// <summary>
+    /// 選択肢リスト
+    /// </summary>
+    /// <typeparam name="Button">ボタン</typeparam>
+    /// <returns>ボタンリスト</returns>
+    private List<Button> choicesButtons = new List<Button>();
+
+    /// <summary>
     /// 章の保存
     /// </summary>
     private Chapter chapter = default;
@@ -67,14 +80,23 @@ public class DisplayMssage : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            if(0 < charQueue.Count) OutputAllChar();
-            else
-            {
-                index++;
-                SetContent();
-            }
+            OnClickMouseLeftButton();
+        }
+    }
+
+    /// <summary>
+    /// マウス右クリックイベント
+    /// </summary>
+    private void OnClickMouseLeftButton()
+    {
+        if (0 < charQueue.Count) OutputAllChar();
+        else
+        {
+            if (0 < choicesButtons.Count) return;
+            index++;
+            SetContent();
         }
     }
 
@@ -105,6 +127,43 @@ public class DisplayMssage : MonoBehaviour
             // 文字表示のテスト
             StartCoroutine(ShowMessage(captionSpeed));
         }
+
+        if (content.IsSetChoices())
+        {
+            SetChoices(content);
+        }
+    }
+
+    /// <summary>
+    /// 選択肢設定
+    /// </summary>
+    /// <param name="content">コンテンツ</param>
+    private void SetChoices(Content content)
+    {
+        choicesPanel.SetActive(true);
+        Choices[] choices = content.choices;
+
+        foreach (Choices choice in choices)
+        {
+            Button button = Instantiate(Resources.Load<Button>("Prefabs/ChoiceButton"), choicesPanel.transform);
+            Text text = button.GetComponentInChildren<Text>();
+            text.text = choice.name;
+            button.name = choice.name;
+            button.onClick.AddListener(() => OnClickChoicesButton(choice.scenario));
+            choicesButtons.Add(button);
+        }
+    }
+
+    /// <summary>
+    /// 選択肢ボタンクリックイベント
+    /// </summary>
+    /// <param name="jumpTo">遷移先の名前</param>
+    private void OnClickChoicesButton(string jumpTo)
+    {
+        foreach (Button button in choicesButtons) Destroy(button.gameObject);
+        choicesPanel.SetActive(false);
+        choicesButtons.Clear();
+        Debug.Log("Jump to " + jumpTo);
     }
 
     /// <summary>
