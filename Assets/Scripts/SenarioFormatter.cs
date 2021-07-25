@@ -8,6 +8,14 @@ public class Chapter
     public string title;
 
     public Scenario[] scenario;
+
+    public int FindScenario2Index(string name)
+    {
+        for (int i = 0; i < scenario.Length; i++)
+            if (string.Equals(name, scenario[i].name)) return i;
+
+        return -1;
+    }
 }
 
 [System.Serializable]
@@ -21,10 +29,11 @@ public class Scenario
     // メンバ関数
     public int ContentLength()
     {
-        if(length != -1)return length;
+        if (length != -1) return length;
 
         length = 0;
-        if(content != null){
+        if (content != null)
+        {
             Type type = content.GetType();
             length = (type.IsArray) ? content.Length : 0;
         }
@@ -48,23 +57,23 @@ public class Content
     public string scene;
 
     // メンバ関数
-    public bool IsSetCharacterName(){ return !string.IsNullOrEmpty(characterName);}
-    public bool IsSetMessage(){ return !string.IsNullOrEmpty(message);}
+    public bool IsSetCharacterName() { return !string.IsNullOrEmpty(characterName); }
+    public bool IsSetMessage() { return !string.IsNullOrEmpty(message); }
     public bool IsSetChoices()
     {
-        if(choices != null)
+        if (choices != null)
         {
             Type type = choices.GetType();
             return type.IsArray;
         }
         return false;
     }
-    public bool IsSetBackground(){ return !string.IsNullOrEmpty(background);}
-    public bool IsSetCharacter(){ return (character != null) ? character.IsSetCharacter() : false;}
-    public bool IsSetBGM(){ return !string.IsNullOrEmpty(BGM);}
-    public bool IsSetSE(){ return !string.IsNullOrEmpty(SE);}
-    public bool IsSetScenario(){ return !string.IsNullOrEmpty(scenario);}
-    public bool IsSetScene(){ return !string.IsNullOrEmpty(scene);}
+    public bool IsSetBackground() { return !string.IsNullOrEmpty(background); }
+    public bool IsSetCharacter() { return (character != null) ? character.IsSetCharacter() : false; }
+    public bool IsSetBGM() { return !string.IsNullOrEmpty(BGM); }
+    public bool IsSetSE() { return !string.IsNullOrEmpty(SE); }
+    public bool IsSetScenario() { return !string.IsNullOrEmpty(scenario); }
+    public bool IsSetScene() { return !string.IsNullOrEmpty(scene); }
 }
 
 [System.Serializable]
@@ -76,7 +85,7 @@ public class Choices
     public int parameter;
 
     // メンバ関数
-    public bool IsSetChoices(){ return !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(scenario);}
+    public bool IsSetChoices() { return !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(scenario); }
 }
 
 [System.Serializable]
@@ -92,6 +101,6 @@ public class Character
     public string animation;
 
     // メンバ関数
-    public bool IsSetCharacter(){ return !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(image);}
+    public bool IsSetCharacter() { return !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(image); }
 }
 

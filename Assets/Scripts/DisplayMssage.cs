@@ -70,7 +70,6 @@ public class DisplayMssage : MonoBehaviour
 
     void Start()
     {
-
         string json = Resources.Load<TextAsset>("Json/HelloScenario").ToString();
         chapter = JsonUtility.FromJson<Chapter>(json);
         scenario = chapter.scenario[0];
@@ -163,7 +162,13 @@ public class DisplayMssage : MonoBehaviour
         foreach (Button button in choicesButtons) Destroy(button.gameObject);
         choicesPanel.SetActive(false);
         choicesButtons.Clear();
-        Debug.Log("Jump to " + jumpTo);
+
+        int idx = chapter.FindScenario2Index(jumpTo);
+
+        index = 0;
+        scenario = chapter.scenario[idx];
+
+        SetContent();
     }
 
     /// <summary>

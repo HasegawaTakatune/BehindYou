@@ -2,7 +2,7 @@
     "title" : "Hello",
     "scenario" : [
         {
-            "name" : "プロローグ",
+            "name" : "prologue",
             "content": [
                 {
                     "id": "1",
@@ -56,56 +56,32 @@
             ]
         },
         {
-            "name" : "チャプター１",
+            "name" : "eate_scenario",
             "content": [
                 {
                     "id": "1",
                     "characterName": "RerykA",
-                    "message": "Hello world!!",
-                    "choices": [
-                        {
-                            "name": "食べる",
-                            "scenario": "eate_scenario",
-                            "parameter": "1"
-                        },
-                        {
-                            "name": "遊ぶ",
-                            "scenario": "play_scenario",
-                            "parameter": "2"
-                        },
-                        {
-                            "name": "寝る",
-                            "scenario": "sleep_scenario",
-                            "parameter": "1"
-                        }
-                    ],
-                    "background": "background_001.png",
-                    "character": {
-                        "image": "character_001.png",
-                        "position": "0, 0, 0",
-                        "rotate": "0, 0, 0, 0",
-                        "size": "1, 1, 1",
-                        "color": "1, 1, 1, 1",
-                        "animation": "animationFile"
-                    },
-                    "BGM": "bgm_001.mp3",
-                    "SE": "se_001.mp3",
-                    "scenario": "JumpScenario",
-                    "scene": "NextScene"
-                },
+                    "message": "ご飯を食べよう。"
+                }
+            ]
+        },
+        {
+            "name" : "play_scenario",
+            "content": [
                 {
-                    "id": "2",
-                    "characterName": "RerykA Mix",
-                    "message": "こんにちわ皆さん"
-                },
+                    "id": "1",
+                    "characterName": "RerykA",
+                    "message": "ゲームして遊ぼう。"
+                }
+            ]
+        },
+        {
+            "name" : "sleep_scenario",
+            "content": [
                 {
-                    "id": "3",
-                    "message": "無名の誰かが話している。"
-                },
-                {
-                    "id": "4",
-                    "characterName": "RerykA Mix",
-                    "message": "終わります。"
+                    "id": "1",
+                    "characterName": "RerykA",
+                    "message": "もう疲れたから寝よう。"
                 }
             ]
         }
