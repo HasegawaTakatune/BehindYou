@@ -25,9 +25,9 @@
                             "parameter": "1"
                         }
                     ],
-                    "background": "background_001.png",
+                    "background": "mati",
                     "character": {
-                        "image": "character_001.png",
+                        "image": "kuma.png",
                         "position": "0, 0, 0",
                         "rotate": "0, 0, 0, 0",
                         "size": "1, 1, 1",

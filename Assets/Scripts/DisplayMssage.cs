@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class DisplayMssage : MonoBehaviour
 {
+    private const string DIRECTORY_IMAGE_RESOURCE = "Images/";
+
+    [SerializeField]
+    private Image backgroundImage = default;
+
     /// <summary>
     /// 名前ウィンドウ
     /// </summary>
@@ -109,6 +114,7 @@ public class DisplayMssage : MonoBehaviour
 
         Content content = scenario.content[index];
 
+        // 名前表示
         if (content.IsSetCharacterName())
         {
             nameWindow.text = content.characterName;
@@ -119,6 +125,7 @@ public class DisplayMssage : MonoBehaviour
             namePanel.SetActive(false);
         }
 
+        // メッセージ表示
         if (content.IsSetMessage())
         {
             charQueue = SeparateString(content.message);
@@ -127,10 +134,32 @@ public class DisplayMssage : MonoBehaviour
             StartCoroutine(ShowMessage(captionSpeed));
         }
 
+        // 選択肢表示
         if (content.IsSetChoices())
         {
             SetChoices(content);
         }
+
+        // キャラクタ表示
+        if(content.IsSetCharacter()){
+            SetCharacter(content);
+        }
+
+        if(content.IsSetBackground())
+        {
+            SetBackground(content);
+        }
+    }
+
+    private void SetCharacter(Content content)
+    {
+
+    }
+
+    private void SetBackground(Content content)
+    {
+        Sprite sp = Instantiate(Resources.Load<Sprite>(DIRECTORY_IMAGE_RESOURCE + content.background));
+        backgroundImage.sprite = sp;
     }
 
     /// <summary>
@@ -165,6 +194,7 @@ public class DisplayMssage : MonoBehaviour
 
         int idx = chapter.FindScenario2Index(jumpTo);
 
+        if(idx == -1)idx = 0;
         index = 0;
         scenario = chapter.scenario[idx];
 
