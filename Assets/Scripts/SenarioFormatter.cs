@@ -102,5 +102,10 @@ public class Character
 
     // メンバ関数
     public bool IsSetCharacter() { return !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(image); }
+    public bool IsSetPosition(){return !string.IsNullOrEmpty(position);}
+    public bool IsSetRotate(){return !string.IsNullOrEmpty(rotate);}
+    public bool IsSetSize(){return !string.IsNullOrEmpty(size);}
+    public bool IsSetColor(){return !string.IsNullOrEmpty(color);}
+    public bool IsSetAnimation(){return false;}
 }
 

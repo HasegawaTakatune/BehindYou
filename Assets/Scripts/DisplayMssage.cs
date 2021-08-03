@@ -5,10 +5,28 @@ using UnityEngine.UI;
 
 public class DisplayMssage : MonoBehaviour
 {
-    private const string DIRECTORY_IMAGE_RESOURCE = "Images/";
+    /// <summary>
+    /// 背景画像ディレクトリ
+    /// </summary>
+    private const string DIRECTORY_BACKGROUND_IMAGE = "Images/Background/";
 
+    /// <summary>
+    /// キャラクタ画像ディレクトリ
+    /// </summary>
+    private const string DIRECTORY_CHARACTER_IMAGE = "Images/Character/";
+
+    private const string DIRECTORY_PREFABS = "Prefabs/";
+
+    /// <summary>
+    /// 背景画像インスタンス
+    /// </summary>
     [SerializeField]
     private Image backgroundImage = default;
+
+    [SerializeField]
+    private GameObject characterPanel = default;
+
+    private List<Image> characterImages = new List<Image>();
 
     /// <summary>
     /// 名前ウィンドウ
@@ -141,25 +159,60 @@ public class DisplayMssage : MonoBehaviour
         }
 
         // キャラクタ表示
-        if(content.IsSetCharacter()){
-            SetCharacter(content);
-        }
-
-        if(content.IsSetBackground())
+        if (content.IsSetCharacter())
         {
-            SetBackground(content);
+            SetCharacter(content.character);
+        }
+
+        if (content.IsSetBackground())
+        {
+            SetBackground(content.background);
         }
     }
 
-    private void SetCharacter(Content content)
+    private void SetCharacter(Character character)
     {
+        Image image = characterImages.Find(n => n.name == character.name);
 
+        if (image == null)
+        {
+            image = Instantiate(Resources.Load<Image>(DIRECTORY_PREFABS + "Character"), characterPanel.transform);
+            image.name = character.name;
+            characterImages.Add(image);
+        }
+
+        Sprite sprite = Instantiate(Resources.Load<Sprite>(DIRECTORY_CHARACTER_IMAGE + character.image));
+        image.sprite = sprite;
+
+        if (character.IsSetPosition())
+        {
+            image.GetComponent<RectTransform>().anchoredPosition = String2Vector3(character.position);
+        }
+
+        if (character.IsSetRotate())
+        {
+            image.GetComponent<RectTransform>().eulerAngles = String2Vector3(character.rotate);
+        }
+
+        if (character.IsSetSize())
+        {
+            image.GetComponent<RectTransform>().sizeDelta = String2Vector3(character.size);
+        }
+
+        if (character.IsSetColor())
+        {
+            image.color = String2Color(character.color);
+        }
     }
 
-    private void SetBackground(Content content)
+    /// <summary>
+    /// 背景画像の設定
+    /// </summary>
+    /// <param name="fileName">背景画像名</param>
+    private void SetBackground(string fileName)
     {
-        Sprite sp = Instantiate(Resources.Load<Sprite>(DIRECTORY_IMAGE_RESOURCE + content.background));
-        backgroundImage.sprite = sp;
+        Sprite sprite = Instantiate(Resources.Load<Sprite>(DIRECTORY_BACKGROUND_IMAGE + fileName));
+        backgroundImage.sprite = sprite;
     }
 
     /// <summary>
@@ -173,7 +226,7 @@ public class DisplayMssage : MonoBehaviour
 
         foreach (Choices choice in choices)
         {
-            Button button = Instantiate(Resources.Load<Button>("Prefabs/ChoiceButton"), choicesPanel.transform);
+            Button button = Instantiate(Resources.Load<Button>(DIRECTORY_PREFABS + "ChoiceButton"), choicesPanel.transform);
             Text text = button.GetComponentInChildren<Text>();
             text.text = choice.name;
             button.name = choice.name;
@@ -194,7 +247,7 @@ public class DisplayMssage : MonoBehaviour
 
         int idx = chapter.FindScenario2Index(jumpTo);
 
-        if(idx == -1)idx = 0;
+        if (idx == -1) idx = 0;
         index = 0;
         scenario = chapter.scenario[idx];
 
@@ -244,5 +297,51 @@ public class DisplayMssage : MonoBehaviour
     {
         StopCoroutine(ShowMessage(captionSpeed));
         while (OutputChar()) ;
+    }
+
+    /// <summary>
+    /// 文字列をVetor3へ変換する
+    /// </summary>
+    /// <param name="input">変換する文字列</param>
+    /// <returns>Vector3</returns>
+    private Vector3 String2Vector3(string input)
+    {
+        // 前後に丸括弧があれば削除し、カンマで分割
+        string[] elements = input.Trim('(', ')').Split(',');
+        Vector3 result = Vector3.zero;
+
+        // ループ回数をelementsの数以下かつ3以下にする
+        int length = Mathf.Min(elements.Length, 3);
+
+        float value;
+        for (int i = 0; i < length; i++)
+        {
+            value = 0;
+
+            // 変換に失敗したときに例外が出る方が望ましければ、Parseを使うのがいいでしょう
+            float.TryParse(elements[i], out value);
+            result[i] = value;
+        }
+
+        return result;
+    }
+
+    private Color String2Color(string input)
+    {
+        string[] elements = input.Trim('(', ')').Split(',');
+        Color result = new Color();
+
+        int length = Mathf.Min(elements.Length, 4);
+
+        byte value;
+        for (int i = 0; i < length; i++)
+        {
+            value = 255;
+
+            byte.TryParse(elements[i], out value);
+            result[i] = value;
+        }
+
+        return result;
     }
 }

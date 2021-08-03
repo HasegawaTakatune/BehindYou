@@ -835,7 +835,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1360309779}
   - component: {fileID: 1360309778}
-  - component: {fileID: 1360309780}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -856,6 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 1391580044}
+  characterPanel: {fileID: 625088195}
   nameWindow: {fileID: 1041646225}
   namePanel: {fileID: 971909071}
   messageWindow: {fileID: 788412695}
@@ -876,18 +876,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1360309780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360309777}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14ec2e048ba07c14cae4ea9d360b400b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1391580041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,6 +1050,10 @@ PrefabInstance:
     - target: {fileID: 5822344350989306479, guid: 586cc884e45ebeb4c824cf5e365f4474, type: 3}
       propertyPath: m_Name
       value: Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822344350989306479, guid: 586cc884e45ebeb4c824cf5e365f4474, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 586cc884e45ebeb4c824cf5e365f4474, type: 3}
