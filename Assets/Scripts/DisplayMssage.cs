@@ -15,6 +15,9 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     private const string DIRECTORY_CHARACTER_IMAGE = "Images/Character/";
 
+    /// <summary>
+    /// プレファブディレクトリ
+    /// </summary>
     private const string DIRECTORY_PREFABS = "Prefabs/";
 
     /// <summary>
@@ -23,10 +26,11 @@ public class DisplayMssage : MonoBehaviour
     [SerializeField]
     private Image backgroundImage = default;
 
+    /// <summary>
+    /// キャラクターパネル
+    /// </summary>
     [SerializeField]
     private GameObject characterPanel = default;
-
-    private List<Image> characterImages = new List<Image>();
 
     /// <summary>
     /// 名前ウィンドウ
@@ -69,6 +73,15 @@ public class DisplayMssage : MonoBehaviour
     /// <typeparam name="Button">ボタン</typeparam>
     /// <returns>ボタンリスト</returns>
     private List<Button> choicesButtons = new List<Button>();
+
+    /// <summary>
+    /// キャラクター画像を保存する
+    /// </summary>
+    /// <typeparam name="Image">画像</typeparam>
+    /// <returns>画像リスト</returns>
+    private List<Image> characterImages = new List<Image>();
+
+    private AudioSource bgmAudio = default;
 
     /// <summary>
     /// 章の保存
@@ -161,7 +174,10 @@ public class DisplayMssage : MonoBehaviour
         // キャラクタ表示
         if (content.IsSetCharacter())
         {
-            SetCharacter(content.character);
+            for (int i = 0; i < content.characteres.Length; i++)
+            {
+                SetCharacter(content.characteres[i]);
+            }
         }
 
         if (content.IsSetBackground())
@@ -170,6 +186,10 @@ public class DisplayMssage : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// キャラクター設定
+    /// </summary>
+    /// <param name="character">キャラクターのパラメーター</param>
     private void SetCharacter(Character character)
     {
         Image image = characterImages.Find(n => n.name == character.name);
@@ -203,6 +223,12 @@ public class DisplayMssage : MonoBehaviour
         {
             image.color = String2Color(character.color);
         }
+
+        if(character.IsDelete())
+        {
+            characterImages.Remove(image);
+            Destroy(image.gameObject);
+        }
     }
 
     /// <summary>
@@ -233,6 +259,11 @@ public class DisplayMssage : MonoBehaviour
             button.onClick.AddListener(() => OnClickChoicesButton(choice.scenario));
             choicesButtons.Add(button);
         }
+    }
+
+    private void SetBackgroundMusic(string bgm)
+    {
+
     }
 
     /// <summary>
@@ -326,10 +357,15 @@ public class DisplayMssage : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// 文字列をColorへ変換する
+    /// </summary>
+    /// <param name="input">変換する文字列</param>
+    /// <returns>Color</returns>
     private Color String2Color(string input)
     {
         string[] elements = input.Trim('(', ')').Split(',');
-        Color result = new Color();
+        Color32 result = new Color32();
 
         int length = Mathf.Min(elements.Length, 4);
 

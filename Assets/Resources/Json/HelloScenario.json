@@ -26,16 +26,18 @@
                         }
                     ],
                     "background": "mati",
-                    "character": {
+                    "characteres": [
+                        {
                         "name": "kuma",
                         "image": "kuma",
-                        "position": "0, 0, 0",
+                        "position": "500, 0, 0",
                         "rotate": "0, 0, 0, 0",
-                        "size": "300, 300, 0",
-                        "color": "1, 1, 1, 1",
+                        "size": "500, 500, 0",
+                        "color": "255, 255, 255, 128",
                         "animation": "animationFile"
-                    },
-                    "BGM": "bgm_001.mp3",
+                    }
+                ],
+                    "BGM": "bgm_0001.mp3",
                     "SE": "se_001.mp3",
                     "scenario": "JumpScenario",
                     "scene": "NextScene"
