@@ -20,6 +20,8 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     private const string DIRECTORY_PREFABS = "Prefabs/";
 
+    private const string DIRECTORY_BGM = "BGM/";
+
     /// <summary>
     /// 背景画像インスタンス
     /// </summary>
@@ -67,6 +69,9 @@ public class DisplayMssage : MonoBehaviour
     [SerializeField]
     private GameObject choicesPanel = default;
 
+    [SerializeField]
+    private AudioSource bgmAudio = default;
+
     /// <summary>
     /// 選択肢リスト
     /// </summary>
@@ -80,8 +85,6 @@ public class DisplayMssage : MonoBehaviour
     /// <typeparam name="Image">画像</typeparam>
     /// <returns>画像リスト</returns>
     private List<Image> characterImages = new List<Image>();
-
-    private AudioSource bgmAudio = default;
 
     /// <summary>
     /// 章の保存
@@ -184,6 +187,11 @@ public class DisplayMssage : MonoBehaviour
         {
             SetBackground(content.background);
         }
+
+        if(content.IsSetBGM())
+        {
+            SetBGM(content.BGM);
+        }
     }
 
     /// <summary>
@@ -224,7 +232,7 @@ public class DisplayMssage : MonoBehaviour
             image.color = String2Color(character.color);
         }
 
-        if(character.IsDelete())
+        if (character.IsDelete())
         {
             characterImages.Remove(image);
             Destroy(image.gameObject);
@@ -261,9 +269,23 @@ public class DisplayMssage : MonoBehaviour
         }
     }
 
-    private void SetBackgroundMusic(string bgm)
+    private void SetBGM(Audio bgm)
     {
+        if (bgm.IsSetAudio())
+        {
+            Debug.Log(bgm.audio);
+            AudioClip audio = Resources.Load<AudioClip>(DIRECTORY_BGM + bgm.audio);
+            Debug.Log(audio);
+            bgmAudio.clip = audio;
+        }
 
+        if (bgm.play) bgmAudio.Play();
+
+        if (bgm.pause) bgmAudio.Pause();
+
+        if (bgm.unpause) bgmAudio.UnPause();
+
+        bgmAudio.pitch = bgm.pitch;
     }
 
     /// <summary>

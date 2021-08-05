@@ -51,8 +51,8 @@ public class Content
     public Choices[] choices;
     public string background;
     public Character[] characteres;
-    public string BGM;
-    public string SE;
+    public Audio BGM;
+    public Audio SE;
     public string scenario;
     public string scene;
 
@@ -70,8 +70,8 @@ public class Content
     }
     public bool IsSetBackground() { return !string.IsNullOrEmpty(background); }
     public bool IsSetCharacter() { return (characteres != null) ? characteres.Length != 0 : false; }
-    public bool IsSetBGM() { return !string.IsNullOrEmpty(BGM); }
-    public bool IsSetSE() { return !string.IsNullOrEmpty(SE); }
+    public bool IsSetBGM() { return BGM != null; }
+    public bool IsSetSE() { return SE != null; }
     public bool IsSetScenario() { return !string.IsNullOrEmpty(scenario); }
     public bool IsSetScene() { return !string.IsNullOrEmpty(scene); }
 }
@@ -99,30 +99,32 @@ public class Character
     public string size;
     public string color;
     public string animation;
-    public string delete;
+    public bool delete;
 
     // メンバ関数
-    public bool IsSetCharacter() { return !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(image); }
-    public bool IsSetPosition(){return !string.IsNullOrEmpty(position);}
-    public bool IsSetRotate(){return !string.IsNullOrEmpty(rotate);}
-    public bool IsSetSize(){return !string.IsNullOrEmpty(size);}
-    public bool IsSetColor(){return !string.IsNullOrEmpty(color);}
-    public bool IsSetAnimation(){return false;}
-    public bool IsDelete(){ 
-        bool result;
-        bool.TryParse(delete, out result);
-        if(result) return bool.Parse(delete); 
-        return false; 
+    public bool IsSetCharacter() { return !string.IsNullOrEmpty(name); }
+    public bool IsSetPosition() { return !string.IsNullOrEmpty(position); }
+    public bool IsSetRotate() { return !string.IsNullOrEmpty(rotate); }
+    public bool IsSetSize() { return !string.IsNullOrEmpty(size); }
+    public bool IsSetColor() { return !string.IsNullOrEmpty(color); }
+    public bool IsSetAnimation() { return false; }
+    public bool IsDelete()
+    {
+        // if (delete == null) return false;
+        return delete;
     }
 }
 
 [System.Serializable]
-public class GameAudio
+public class Audio
 {
     public string name;
     public string audio;
-    public string play;
-    public string pause;
-    public string unpause;
-    public string pitch;
+    public bool play;
+    public bool pause;
+    public bool unpause;
+    public float pitch;
+
+    public bool IsSetName() { return !string.IsNullOrEmpty(name); }
+    public bool IsSetAudio() { return !string.IsNullOrEmpty(audio); }
 }

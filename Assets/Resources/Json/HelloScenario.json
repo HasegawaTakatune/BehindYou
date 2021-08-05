@@ -1,43 +1,51 @@
 {
-    "title" : "Hello",
-    "scenario" : [
+    "title": "Hello",
+    "scenario": [
         {
-            "name" : "prologue",
+            "name": "prologue",
             "content": [
                 {
-                    "id": "1",
+                    "id": 1,
                     "characterName": "RerykA",
                     "message": "Hello world!!",
                     "choices": [
                         {
                             "name": "食べる",
                             "scenario": "eate_scenario",
-                            "parameter": "1"
+                            "parameter": 1
                         },
                         {
                             "name": "遊ぶ",
                             "scenario": "play_scenario",
-                            "parameter": "2"
+                            "parameter": 2
                         },
                         {
                             "name": "寝る",
                             "scenario": "sleep_scenario",
-                            "parameter": "1"
+                            "parameter": 2
                         }
                     ],
                     "background": "mati",
                     "characteres": [
                         {
-                        "name": "kuma",
-                        "image": "kuma",
-                        "position": "500, 0, 0",
-                        "rotate": "0, 0, 0, 0",
-                        "size": "500, 500, 0",
-                        "color": "255, 255, 255, 128",
-                        "animation": "animationFile"
-                    }
-                ],
-                    "BGM": "bgm_0001.mp3",
+                            "name": "kuma",
+                            "image": "kuma",
+                            "position": "500, 0, 0",
+                            "rotate": "0, 0, 0, 0",
+                            "size": "500, 500, 0",
+                            "color": "255, 255, 255, 128",
+                            "animation": "animationFile",
+                            "delete": false
+                        }
+                    ],
+                    "BGM": {
+                        "name": "firstBGM",
+                        "audio": "bgm_0001",
+                        "play": true,
+                        "pause": false,
+                        "unpause": false,
+                        "pitch": 1
+                    },
                     "SE": "se_001.mp3",
                     "scenario": "JumpScenario",
                     "scene": "NextScene"
@@ -59,30 +67,30 @@
             ]
         },
         {
-            "name" : "eate_scenario",
+            "name": "eate_scenario",
             "content": [
                 {
-                    "id": "1",
+                    "id": 2,
                     "characterName": "RerykA",
                     "message": "ご飯を食べよう。"
                 }
             ]
         },
         {
-            "name" : "play_scenario",
+            "name": "play_scenario",
             "content": [
                 {
-                    "id": "1",
+                    "id": 3,
                     "characterName": "RerykA",
                     "message": "ゲームして遊ぼう。"
                 }
             ]
         },
         {
-            "name" : "sleep_scenario",
+            "name": "sleep_scenario",
             "content": [
                 {
-                    "id": "1",
+                    "id": 4,
                     "characterName": "RerykA",
                     "message": "もう疲れたから寝よう。"
                 }
