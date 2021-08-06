@@ -26,7 +26,7 @@
                         }
                     ],
                     "background": "mati",
-                    "characteres": [
+                    "characters": [
                         {
                             "name": "kuma",
                             "image": "kuma",
@@ -46,7 +46,16 @@
                         "unpause": false,
                         "pitch": 1
                     },
-                    "SE": "se_001.mp3",
+                    "SE": [
+                        {
+                            "name": "firstSE",
+                            "audio": "se_0001",
+                            "play": true,
+                            "pause": false,
+                            "unpause": false,
+                            "pitch": 1
+                        }
+                    ],
                     "scenario": "JumpScenario",
                     "scene": "NextScene"
                 },

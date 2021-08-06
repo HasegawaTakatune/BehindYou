@@ -22,6 +22,8 @@ public class DisplayMssage : MonoBehaviour
 
     private const string DIRECTORY_BGM = "BGM/";
 
+    private const string DIRECTORY_SE = "SE/";
+
     /// <summary>
     /// 背景画像インスタンス
     /// </summary>
@@ -71,6 +73,11 @@ public class DisplayMssage : MonoBehaviour
 
     [SerializeField]
     private AudioSource bgmAudio = default;
+
+    [SerializeField]
+    private GameObject jukebox = default;
+
+    private List<AudioSource> seAudios = new List<AudioSource>();
 
     /// <summary>
     /// 選択肢リスト
@@ -171,16 +178,15 @@ public class DisplayMssage : MonoBehaviour
         // 選択肢表示
         if (content.IsSetChoices())
         {
-            SetChoices(content);
+            SetChoices(content.choices);
         }
 
+Debug.Log("TEST");
         // キャラクタ表示
         if (content.IsSetCharacter())
         {
-            for (int i = 0; i < content.characteres.Length; i++)
-            {
-                SetCharacter(content.characteres[i]);
-            }
+            Debug.Log("Call set characeter");
+            SetCharacter(content.characters);
         }
 
         if (content.IsSetBackground())
@@ -188,9 +194,14 @@ public class DisplayMssage : MonoBehaviour
             SetBackground(content.background);
         }
 
-        if(content.IsSetBGM())
+        if (content.IsSetBGM())
         {
             SetBGM(content.BGM);
+        }
+
+        if (content.IsSetSE())
+        {
+            SetSE(content.SE);
         }
     }
 
@@ -198,44 +209,47 @@ public class DisplayMssage : MonoBehaviour
     /// キャラクター設定
     /// </summary>
     /// <param name="character">キャラクターのパラメーター</param>
-    private void SetCharacter(Character character)
+    private void SetCharacter(Character[] characters)
     {
-        Image image = characterImages.Find(n => n.name == character.name);
-
-        if (image == null)
+        foreach (Character chara in characters)
         {
-            image = Instantiate(Resources.Load<Image>(DIRECTORY_PREFABS + "Character"), characterPanel.transform);
-            image.name = character.name;
-            characterImages.Add(image);
-        }
+            Image image = characterImages.Find(n => n.name == chara.name);
 
-        Sprite sprite = Instantiate(Resources.Load<Sprite>(DIRECTORY_CHARACTER_IMAGE + character.image));
-        image.sprite = sprite;
+            if (image == null)
+            {
+                image = Instantiate(Resources.Load<Image>(DIRECTORY_PREFABS + "Character"), characterPanel.transform);
+                image.name = chara.name;
+                characterImages.Add(image);
+            }
 
-        if (character.IsSetPosition())
-        {
-            image.GetComponent<RectTransform>().anchoredPosition = String2Vector3(character.position);
-        }
+            Sprite sprite = Instantiate(Resources.Load<Sprite>(DIRECTORY_CHARACTER_IMAGE + chara.image));
+            image.sprite = sprite;
 
-        if (character.IsSetRotate())
-        {
-            image.GetComponent<RectTransform>().eulerAngles = String2Vector3(character.rotate);
-        }
+            if (chara.IsSetPosition())
+            {
+                image.GetComponent<RectTransform>().anchoredPosition = String2Vector3(chara.position);
+            }
 
-        if (character.IsSetSize())
-        {
-            image.GetComponent<RectTransform>().sizeDelta = String2Vector3(character.size);
-        }
+            if (chara.IsSetRotate())
+            {
+                image.GetComponent<RectTransform>().eulerAngles = String2Vector3(chara.rotate);
+            }
 
-        if (character.IsSetColor())
-        {
-            image.color = String2Color(character.color);
-        }
+            if (chara.IsSetSize())
+            {
+                image.GetComponent<RectTransform>().sizeDelta = String2Vector3(chara.size);
+            }
 
-        if (character.IsDelete())
-        {
-            characterImages.Remove(image);
-            Destroy(image.gameObject);
+            if (chara.IsSetColor())
+            {
+                image.color = String2Color(chara.color);
+            }
+
+            if (chara.IsDelete())
+            {
+                characterImages.Remove(image);
+                Destroy(image.gameObject);
+            }
         }
     }
 
@@ -253,10 +267,9 @@ public class DisplayMssage : MonoBehaviour
     /// 選択肢設定
     /// </summary>
     /// <param name="content">コンテンツ</param>
-    private void SetChoices(Content content)
+    private void SetChoices(Choices[] choices)
     {
         choicesPanel.SetActive(true);
-        Choices[] choices = content.choices;
 
         foreach (Choices choice in choices)
         {
@@ -273,19 +286,37 @@ public class DisplayMssage : MonoBehaviour
     {
         if (bgm.IsSetAudio())
         {
-            Debug.Log(bgm.audio);
             AudioClip audio = Resources.Load<AudioClip>(DIRECTORY_BGM + bgm.audio);
-            Debug.Log(audio);
             bgmAudio.clip = audio;
         }
 
         if (bgm.play) bgmAudio.Play();
-
         if (bgm.pause) bgmAudio.Pause();
-
         if (bgm.unpause) bgmAudio.UnPause();
-
         bgmAudio.pitch = bgm.pitch;
+    }
+
+    private void SetSE(Audio[] se)
+    {
+        foreach (Audio ad in se)
+        {
+            AudioSource audioSource = seAudios.Find(n => n.name == ad.name);
+
+            if (audioSource == null)
+            {
+                audioSource = Instantiate(Resources.Load<AudioSource>(DIRECTORY_PREFABS + "SE"), jukebox.transform);
+                audioSource.name = ad.name;
+                seAudios.Add(audioSource);
+            }
+
+            AudioClip audio = Resources.Load<AudioClip>(DIRECTORY_SE + ad.audio);
+            audioSource.clip = audio;
+
+            if (ad.play) audioSource.Play();
+            if (ad.pause) audioSource.Pause();
+            if (ad.unpause) audioSource.UnPause();
+            audioSource.pitch = ad.pitch;
+        }
     }
 
     /// <summary>
