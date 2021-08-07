@@ -54,7 +54,7 @@ public class Content
     public Audio BGM;
     public Audio[] SE;
     public string scenario;
-    public string scene;
+    public string nextScene;
 
     // メンバ関数
     public bool IsSetCharacterName() { return !string.IsNullOrEmpty(characterName); }
@@ -73,7 +73,7 @@ public class Content
     public bool IsSetBGM() { if (BGM != null) return BGM.IsSetAudio(); return false; }
     public bool IsSetSE() { return (SE != null) ? SE.Length != 0 : false; }
     public bool IsSetScenario() { return !string.IsNullOrEmpty(scenario); }
-    public bool IsSetScene() { return !string.IsNullOrEmpty(scene); }
+    public bool IsSetNextScene() { return !string.IsNullOrEmpty(nextScene); }
 }
 
 [System.Serializable]

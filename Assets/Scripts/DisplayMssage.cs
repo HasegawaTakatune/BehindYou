@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DisplayMssage : MonoBehaviour
 {
@@ -76,6 +77,9 @@ public class DisplayMssage : MonoBehaviour
 
     [SerializeField]
     private GameObject jukebox = default;
+
+    [SerializeField]
+    private Fade fade = default;
 
     private List<AudioSource> seAudios = new List<AudioSource>();
 
@@ -181,11 +185,9 @@ public class DisplayMssage : MonoBehaviour
             SetChoices(content.choices);
         }
 
-Debug.Log("TEST");
         // キャラクタ表示
         if (content.IsSetCharacter())
         {
-            Debug.Log("Call set characeter");
             SetCharacter(content.characters);
         }
 
@@ -202,6 +204,11 @@ Debug.Log("TEST");
         if (content.IsSetSE())
         {
             SetSE(content.SE);
+        }
+
+        if (content.IsSetNextScene())
+        {
+            StartCoroutine(LoadScene(content.nextScene));
         }
     }
 
@@ -316,6 +323,11 @@ Debug.Log("TEST");
             if (ad.pause) audioSource.Pause();
             if (ad.unpause) audioSource.UnPause();
             audioSource.pitch = ad.pitch;
+            if (ad.delete)
+            {
+                seAudios.Remove(audioSource);
+                Destroy(audioSource);
+            }
         }
     }
 
@@ -336,6 +348,16 @@ Debug.Log("TEST");
         scenario = chapter.scenario[idx];
 
         SetContent();
+    }
+
+    IEnumerator LoadScene(string sceneName)
+    {
+        fade.FadeIn();
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 
     /// <summary>
