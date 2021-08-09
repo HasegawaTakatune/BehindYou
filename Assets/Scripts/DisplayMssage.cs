@@ -21,8 +21,14 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     private const string DIRECTORY_PREFABS = "Prefabs/";
 
+    /// <summary>
+    /// BGMディレクトリ
+    /// </summary>
     private const string DIRECTORY_BGM = "BGM/";
 
+    /// <summary>
+    /// SEディレクトリ
+    /// </summary>
     private const string DIRECTORY_SE = "SE/";
 
     /// <summary>
@@ -72,15 +78,29 @@ public class DisplayMssage : MonoBehaviour
     [SerializeField]
     private GameObject choicesPanel = default;
 
+    /// <summary>
+    /// BGMオーディオソース
+    /// </summary>
     [SerializeField]
     private AudioSource bgmAudio = default;
 
+    /// <summary>
+    /// SEオーディオソース群（ジュークボックス）
+    /// </summary>
     [SerializeField]
     private GameObject jukebox = default;
 
+    /// <summary>
+    /// フェードオブジェクト
+    /// </summary>
     [SerializeField]
     private Fade fade = default;
 
+    /// <summary>
+    /// SEオーディオリスト
+    /// </summary>
+    /// <typeparam name="AudioSource">オーディオソース</typeparam>
+    /// <returns>オーディオソース</returns>
     private List<AudioSource> seAudios = new List<AudioSource>();
 
     /// <summary>
@@ -118,7 +138,7 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     private Queue<char> charQueue;
 
-    void Start()
+    private void Start()
     {
         string json = Resources.Load<TextAsset>("Json/HelloScenario").ToString();
         chapter = JsonUtility.FromJson<Chapter>(json);
@@ -127,7 +147,7 @@ public class DisplayMssage : MonoBehaviour
         SetContent();
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -191,21 +211,25 @@ public class DisplayMssage : MonoBehaviour
             SetCharacter(content.characters);
         }
 
+        // 背景画像設定
         if (content.IsSetBackground())
         {
             SetBackground(content.background);
         }
 
+        // BGM設定
         if (content.IsSetBGM())
         {
             SetBGM(content.BGM);
         }
 
+        // SE設定
         if (content.IsSetSE())
         {
             SetSE(content.SE);
         }
 
+        // シーン遷移設定
         if (content.IsSetNextScene())
         {
             StartCoroutine(LoadScene(content.nextScene));
@@ -289,6 +313,10 @@ public class DisplayMssage : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// BGM設定
+    /// </summary>
+    /// <param name="bgm">BGMパラメータ</param>
     private void SetBGM(Audio bgm)
     {
         if (bgm.IsSetAudio())
@@ -303,6 +331,10 @@ public class DisplayMssage : MonoBehaviour
         bgmAudio.pitch = bgm.pitch;
     }
 
+    /// <summary>
+    /// SE設定
+    /// </summary>
+    /// <param name="se">SEパラメータ</param>
     private void SetSE(Audio[] se)
     {
         foreach (Audio ad in se)
@@ -350,9 +382,15 @@ public class DisplayMssage : MonoBehaviour
         SetContent();
     }
 
-    IEnumerator LoadScene(string sceneName)
+    /// <summary>
+    /// シーン遷移
+    /// </summary>
+    /// <param name="sceneName">遷移先のシーン名</param>
+    /// <returns></returns>
+    private IEnumerator LoadScene(string sceneName)
     {
-        fade.FadeIn();
+        yield return StartCoroutine(fade.AsyncFadeIn());
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         while (!asyncLoad.isDone)
         {

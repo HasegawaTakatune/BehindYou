@@ -2,39 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Fade : MonoBehaviour
 {
+    /// <summary>
+    /// フェード用のパネル画像
+    /// </summary>
     [SerializeField]
     private Image fadePanel = default;
 
+    /// <summary>
+    /// ロード中テキスト
+    /// </summary>
     [SerializeField]
-    private Text fadeText = default;
+    private Text nowloadText = default;
 
-    private float fadeSpeed = 0.05f;
+    /// <summary>
+    /// フェード速度
+    /// </summary>
+    private float fadeSpeed = 0.01f;
 
+    /// <summary>
+    /// テキストの最大長さ
+    /// </summary>
     private int maxTextLength = 8;
 
+    /// <summary>
+    /// フェードイン
+    /// </summary>
     public void FadeIn()
     {
         StartCoroutine(AsyncFadeIn());
     }
 
+    /// <summary>
+    /// フェードアウト
+    /// </summary>
     public void FadeOut()
     {
         StartCoroutine(AsyncFadeOut());
     }
 
+    /// <summary>
+    /// ローディング中
+    /// </summary>
     public void NowLoading()
     {
         StartCoroutine(AsyncNoLoading());
     }
 
-    private IEnumerator AsyncFadeIn()
+    /// <summary>
+    /// フェードイン（非同期処理）
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator AsyncFadeIn()
     {
         float alpha = 0;
         Color pnl = Color.black;
-        // Color txt = Color.white;
+
+        fadePanel.color = new Color(pnl.r, pnl.g, pnl.b, alpha);
+        fadePanel.enabled = true;
 
         while (alpha < 1)
         {
@@ -42,18 +70,23 @@ public class Fade : MonoBehaviour
             alpha += fadeSpeed;
 
             fadePanel.color = new Color(pnl.r, pnl.g, pnl.b, alpha);
-            // fadeText.color = new Color(txt.r, txt.g, txt.b, alpha);
         }
         NowLoading();
+        yield return new WaitForSeconds(1.0f);
     }
 
-    private IEnumerator AsyncFadeOut()
+    /// <summary>
+    /// フェードアウト（非同期処理）
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator AsyncFadeOut()
     {
         float alpha = 1;
         Color pnl = Color.black;
-        // Color txt = Color.white;
 
-        fadeText.enabled = false;
+        fadePanel.color = new Color(pnl.r, pnl.g, pnl.b, alpha);
+        fadePanel.enabled = true;
+        nowloadText.enabled = false;
 
         while (0 < alpha)
         {
@@ -61,20 +94,24 @@ public class Fade : MonoBehaviour
             alpha -= fadeSpeed;
 
             fadePanel.color = new Color(pnl.r, pnl.g, pnl.b, alpha);
-            // fadeText.color = new Color(txt.r, txt.g, txt.b, alpha);
         }
+        fadePanel.enabled = false;
     }
 
+    /// <summary>
+    /// ロード中（非同期処理）
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator AsyncNoLoading()
     {
-        fadeText.enabled= true;
-        fadeText.text = "読み込み中";
+        nowloadText.enabled= true;
+        nowloadText.text = "読み込み中";
 
-        while (fadeText.enabled)
+        while (nowloadText.enabled)
         {
             yield return new WaitForSeconds(0.5f);
-            fadeText.text += "．";
-            if (maxTextLength < fadeText.text.Length) fadeText.text = "読み込み中";
+            nowloadText.text += "．";
+            if (maxTextLength < nowloadText.text.Length) nowloadText.text = "読み込み中";
         }
     }
 }

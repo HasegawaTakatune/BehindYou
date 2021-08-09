@@ -8,23 +8,6 @@
                     "id": 1,
                     "characterName": "RerykA",
                     "message": "Hello world!!",
-                    "choices": [
-                        {
-                            "name": "食べる",
-                            "scenario": "eate_scenario",
-                            "parameter": 1
-                        },
-                        {
-                            "name": "遊ぶ",
-                            "scenario": "play_scenario",
-                            "parameter": 2
-                        },
-                        {
-                            "name": "寝る",
-                            "scenario": "sleep_scenario",
-                            "parameter": 2
-                        }
-                    ],
                     "background": "mati",
                     "characters": [
                         {
@@ -55,23 +38,38 @@
                             "unpause": false,
                             "pitch": 1
                         }
-                    ],
-                    "scenario": "JumpScenario",
-                    "scene": "NextScene"
+                    ]
                 },
                 {
-                    "id": "2",
+                    "id": 2,
                     "characterName": "RerykA Mix",
                     "message": "こんにちわ皆さん"
                 },
                 {
-                    "id": "3",
+                    "id": 3,
                     "message": "無名の誰かが話している。"
                 },
                 {
-                    "id": "4",
-                    "characterName": "RerykA Mix",
-                    "message": "終わります。"
+                    "id": 4,
+                    "characterName": "RerykA",
+                    "message": "なにをしようか？",
+                    "choices": [
+                        {
+                            "name": "食べる",
+                            "scenario": "eate_scenario",
+                            "parameter": 1
+                        },
+                        {
+                            "name": "遊ぶ",
+                            "scenario": "play_scenario",
+                            "parameter": 2
+                        },
+                        {
+                            "name": "寝る",
+                            "scenario": "sleep_scenario",
+                            "parameter": 2
+                        }
+                    ]
                 }
             ]
         },
@@ -79,9 +77,20 @@
             "name": "eate_scenario",
             "content": [
                 {
-                    "id": 2,
+                    "id": 5,
                     "characterName": "RerykA",
                     "message": "ご飯を食べよう。"
+                },
+                {
+                    "id": 6,
+                    "characterName": "RerykA",
+                    "message": "こんにちわ皆さん"
+                },
+                {
+                    "id": 7,
+                    "characterName": "RerykA",
+                    "message": "",
+                    "nextScene": "SampleNext"
                 }
             ]
         },
@@ -89,9 +98,20 @@
             "name": "play_scenario",
             "content": [
                 {
-                    "id": 3,
+                    "id": 4,
                     "characterName": "RerykA",
                     "message": "ゲームして遊ぼう。"
+                },
+                {
+                    "id": 5,
+                    "characterName": "RerykA",
+                    "message": "こんにちわ皆さん"
+                },
+                {
+                    "id": 6,
+                    "characterName": "RerykA",
+                    "message": "",
+                    "nextScene": "SampleNext"
                 }
             ]
         },
@@ -102,6 +122,17 @@
                     "id": 4,
                     "characterName": "RerykA",
                     "message": "もう疲れたから寝よう。"
+                },
+                {
+                    "id": 5,
+                    "characterName": "RerykA",
+                    "message": "こんにちわ皆さん"
+                },
+                {
+                    "id": 6,
+                    "characterName": "RerykA",
+                    "message": "",
+                    "nextScene": "SampleNext"
                 }
             ]
         }

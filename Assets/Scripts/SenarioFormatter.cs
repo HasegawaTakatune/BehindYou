@@ -53,7 +53,6 @@ public class Content
     public Character[] characters;
     public Audio BGM;
     public Audio[] SE;
-    public string scenario;
     public string nextScene;
 
     // メンバ関数
@@ -72,7 +71,6 @@ public class Content
     public bool IsSetCharacter() { return (characters != null) ? characters.Length != 0 : false; }
     public bool IsSetBGM() { if (BGM != null) return BGM.IsSetAudio(); return false; }
     public bool IsSetSE() { return (SE != null) ? SE.Length != 0 : false; }
-    public bool IsSetScenario() { return !string.IsNullOrEmpty(scenario); }
     public bool IsSetNextScene() { return !string.IsNullOrEmpty(nextScene); }
 }
 
