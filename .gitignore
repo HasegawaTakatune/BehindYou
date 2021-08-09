@@ -61,6 +61,6 @@ crashlytics-build.properties
 # VScode
 .vscode/
 
-/Assets/Resources/Images/
-/Assets/Resources/BGM/
-/Assets/Resources/SE/
+#/Assets/Resources/Images/
+#/Assets/Resources/BGM/
+#/Assets/Resources/SE/
