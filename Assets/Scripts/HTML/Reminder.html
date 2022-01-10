@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sample</title>
+    <script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="calendar-container">
+            <h1>October 2020</h1>
+            <table class="calendar">
+                <tr>
+                    <th v-for="(header, index) in headers" :key="index">{{ header }}</th>
+                </tr>
+                <tr class="day" v-for="(week) in 5" :key="week">
+                    <td v-for="(days) in 7" :key="days">{{ days + (week - 1) * 7 }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            name: 'Sample',
+            data: {
+                headers: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+            },
+
+            methods: {
+            },
+
+            mounted() {
+            },
+
+            beforeDestroy() {
+            },
+        });
+    </script>
+    <style scoped>
+        .calendar-container {
+            width: 500px;
+            margin: 0 auto;
+            border-radius: 5px;
+            background: #f6f5f4;
+            color: #1a1a1a;
+        }
+
+        h1 {
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .calendar {
+            padding: 0 30px 30px 30px;
+        }
+
+        .day *:first-child {
+            color: #ff838b;
+        }
+
+        .day *:last-child {
+            color: #6fb5ff;
+        }
+    </style>
+</body>
+
+</html>
