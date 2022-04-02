@@ -104,7 +104,7 @@ public class Fade : MonoBehaviour
     /// <returns></returns>
     private IEnumerator AsyncNoLoading()
     {
-        nowloadText.enabled= true;
+        nowloadText.enabled = true;
         nowloadText.text = "読み込み中";
 
         while (nowloadText.enabled)

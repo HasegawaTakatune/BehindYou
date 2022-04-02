@@ -10,6 +10,6 @@ public class SampleNest : MonoBehaviour
 
     private void Start()
     {
-        fade.FadeOut();    
+        fade.FadeOut();
     }
 }
