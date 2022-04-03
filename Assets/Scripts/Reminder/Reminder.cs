@@ -4,14 +4,35 @@ using System;
 
 public class Reminder : MonoBehaviour
 {
-
+    /// <summary>
+    /// コンテント（生成したオブジェクトの親となるオブジェクト）
+    /// </summary>
     [SerializeField] private Transform content = default;
+
+    /// <summary>
+    /// リマインダー1項目分のオブジェクト
+    /// </summary>
     [SerializeField] private GameObject prefab = default;
-    [SerializeField] private ReminderDetail detail;
-    [SerializeField] private Text date;
+
+    /// <summary>
+    /// リマインダー詳細
+    /// </summary>
+    [SerializeField] private ReminderDetail detail = default;
+
+    /// <summary>
+    /// 日付
+    /// </summary>
+    [SerializeField] private Text date = default;
+
+    /// <summary>
+    /// メッセージ
+    /// </summary>
     [SerializeField] private String[] messages = { "aaa", "bbb", "ccc", "ddd", "eee", "fff", "ggg", "hhh", "iii", "jjj", "kkk" };
 
-    void Start()
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    private void Start()
     {
         DateTime dt = DateTime.Now;
 
@@ -27,6 +48,11 @@ public class Reminder : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 曜日変換
+    /// </summary>
+    /// <param name="date">日付</param>
+    /// <returns>曜日（日本語）</returns>
     private string GetDate2Week(DateTime date)
     {
         switch (date.DayOfWeek)
