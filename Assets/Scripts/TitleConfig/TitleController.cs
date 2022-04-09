@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class TitleController : MonoBehaviour
     /// </summary>
     public void onStartGame()
     {
-        Debug.Log("Game start");
+        SceneManager.LoadScene("SampleScene");
     }
 
     /// <summary>
@@ -25,7 +26,7 @@ public class TitleController : MonoBehaviour
     /// </summary>
     public void onLoadGame()
     {
-        Debug.Log("Game load");
+        SceneManager.LoadScene("SampleScene");
     }
 
     /// <summary>
