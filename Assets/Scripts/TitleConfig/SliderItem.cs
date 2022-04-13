@@ -1,31 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SliderItem : MonoBehaviour
+public class SliderItem : ConfigBase
 {
-    /// <summary>
-    /// 表示するラベル文字
-    /// </summary>
-    [SerializeField] private string label = default;
-
-    /// <summary>
-    /// 表示するラベルオブジェクト
-    /// </summary>
-    [SerializeField] private Text labelText = default;
-
     /// <summary>
     /// スライダー
     /// </summary>
     [SerializeField] private Slider inputSlider = default;
+
     /// <summary>
     /// テキスト入力
     /// </summary>
     [SerializeField] private InputField inputText = default;
-
-    /// <summary>
-    /// 入力値
-    /// </summary>
-    public int volume = default;
 
     /// <summary>
     /// スライダー入力イベント
@@ -33,7 +19,7 @@ public class SliderItem : MonoBehaviour
     public void onSliderChenged()
     {
         inputText.text = inputSlider.value.ToString();
-        volume = (int)inputSlider.value;
+        inputValue = (int)inputSlider.value;
     }
 
     /// <summary>
@@ -43,14 +29,14 @@ public class SliderItem : MonoBehaviour
     {
         int value = int.Parse(inputText.text);
         inputSlider.value = value;
-        volume = value;
+        inputValue = value;
     }
 
     /// <summary>
     /// 初期化
     /// </summary>
-    private void Start()
+    private new void Start()
     {
-        labelText.text = label;
+        base.Start();
     }
 }

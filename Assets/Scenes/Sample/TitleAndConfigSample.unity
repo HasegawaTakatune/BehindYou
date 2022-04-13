@@ -668,9 +668,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: SE
   labelText: {fileID: 1165466186}
+  inputValue: 0
+  inputKey: 
   inputSlider: {fileID: 235654847}
   inputText: {fileID: 962839420}
-  volume: 0
 --- !u!1 &168925124
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,9 +800,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: Voice
   labelText: {fileID: 1141749170}
+  inputValue: 0
+  inputKey: 
   inputSlider: {fileID: 670883085}
   inputText: {fileID: 152641816}
-  volume: 0
 --- !u!1 &207488563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2131,11 +2133,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: "\u6587\u5B57\u901F\u5EA6"
   labelText: {fileID: 1902488495}
+  inputValue: 0
+  inputKey: TextSpeed
   radioButtons:
   - {fileID: 370614422}
   - {fileID: 2030680558}
   - {fileID: 2017638681}
-  clicked: 0
 --- !u!1 &670883084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2851,9 +2854,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: BGM
   labelText: {fileID: 7090997}
+  inputValue: 0
+  inputKey: 
   inputSlider: {fileID: 237033385}
   inputText: {fileID: 1807373854}
-  volume: 0
 --- !u!1 &962839418
 GameObject:
   m_ObjectHideFlags: 0
@@ -5735,8 +5739,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: "\u89E3\u50CF\u5EA6"
   labelText: {fileID: 440628590}
+  inputValue: 0
+  inputKey: 
   dropdown: {fileID: 435018621}
-  selected: 0
 --- !u!1 &1958591178
 GameObject:
   m_ObjectHideFlags: 0
@@ -6327,6 +6332,7 @@ GameObject:
   - component: {fileID: 2092054627}
   - component: {fileID: 2092054629}
   - component: {fileID: 2092054628}
+  - component: {fileID: 2092054630}
   m_Layer: 5
   m_Name: Config Panel
   m_TagString: Untagged
@@ -6398,3 +6404,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092054626}
   m_CullTransparentMesh: 1
+--- !u!114 &2092054630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092054626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e8f921dd112ae4b88ece49d71d052b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
