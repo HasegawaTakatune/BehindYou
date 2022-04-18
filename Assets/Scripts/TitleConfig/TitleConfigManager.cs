@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TitleController : MonoBehaviour
+using Configs;
+
+public class TitleConfigManager : MonoBehaviour
 {
     /// <summary>
     /// タイトルパネル
@@ -12,6 +15,11 @@ public class TitleController : MonoBehaviour
     /// 設定パネル
     /// </summary>
     [SerializeField] private GameObject configPanel = default;
+
+    /// <summary>
+    /// 設定リスト
+    /// </summary>
+    [SerializeField] ConfigBase[] configs = default;
 
     /// <summary>
     /// ゲームスタートイベント
@@ -57,5 +65,35 @@ public class TitleController : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    /// <summary>
+    /// 設定の保存ボタン
+    /// </summary>
+    public void onClickSaveConfig()
+    {
+        try
+        {
+            foreach (ConfigBase config in configs)
+            {
+                PlayerPrefs.SetInt(config.GetKey(), config.GetValue());
+            }
+            PlayerPrefs.Save();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    /// <summary>
+    /// 保存した設定の確認用（一時的に実装）
+    /// </summary>
+    public void showSavedValue()
+    {
+        foreach (string key in ConfigStatus.ConfigKeys)
+        {
+            Debug.Log(key + ':' + PlayerPrefs.GetInt(key, -1));
+        }
     }
 }
