@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using Configs;
+
 public class ConfigBase : MonoBehaviour
 {
     /// <summary>
@@ -21,7 +23,7 @@ public class ConfigBase : MonoBehaviour
     /// <summary>
     /// データ名
     /// </summary>
-    [SerializeField] protected string inputKey = default;
+    [SerializeField] protected ConfigStatus.CONFIG_INDEX inputKey = default;
 
     /// <summary>
     /// 初期化
@@ -29,6 +31,15 @@ public class ConfigBase : MonoBehaviour
     protected void Start()
     {
         labelText.text = label;
+    }
+
+    /// <summary>
+    /// オブジェクト活性化
+    /// </summary>
+    protected virtual void OnEnable()
+    {
+        string key = ConfigStatus.ConfigKeys[(int)inputKey];
+        inputValue = PlayerPrefs.GetInt(key, 1);
     }
 
     /// <summary>
@@ -46,6 +57,6 @@ public class ConfigBase : MonoBehaviour
     /// <returns></returns>
     public string GetKey()
     {
-        return inputKey;
+        return ConfigStatus.ConfigKeys[(int)inputKey];
     }
 }

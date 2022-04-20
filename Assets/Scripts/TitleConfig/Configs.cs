@@ -1,3 +1,6 @@
+using System;
+using System.Collections.ObjectModel;
+
 namespace Configs
 {
     public static class ConfigStatus
@@ -43,6 +46,19 @@ namespace Configs
         /// 設定名リスト
         /// </summary>
         /// <value></value>
-        public static readonly string[] ConfigKeys = { RESOLUTION, BGM, SE, VOICE, TEXT_SPEED };
+        public static readonly ReadOnlyCollection<string> ConfigKeys = Array.AsReadOnly(new string[] { RESOLUTION, BGM, SE, VOICE, TEXT_SPEED });
+
+        /// <summary>
+        /// 定数名リスト用 ConfigKeys配列と連動させて使う
+        /// /// </summary>
+        public enum CONFIG_INDEX
+        {
+            RESOLUTION = 0,
+            BGM,
+            SE,
+            VOICE,
+            TEXT_SPEED,
+            MAX,
+        }
     }
 }

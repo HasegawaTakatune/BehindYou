@@ -23,4 +23,13 @@ public class SelecterItem : ConfigBase
     {
         base.Start();
     }
+
+    /// <summary>
+    /// 活性化イベント
+    /// </summary>
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        dropdown.value = inputValue;
+    }
 }

@@ -39,4 +39,14 @@ public class SliderItem : ConfigBase
     {
         base.Start();
     }
+
+    /// <summary>
+    /// 活性化イベント
+    /// </summary>
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        inputSlider.value = inputValue;
+        inputText.text = inputValue.ToString();
+    }
 }

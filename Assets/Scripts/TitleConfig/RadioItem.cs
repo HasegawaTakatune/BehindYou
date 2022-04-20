@@ -18,7 +18,6 @@ public class RadioItem : ConfigBase
         {
             radioButtons[i].interactable = (i != index);
         }
-
         inputValue = index;
     }
 
@@ -32,6 +31,17 @@ public class RadioItem : ConfigBase
         {
             if (radioButtons[i].interactable == false) inputValue = i;
         }
+    }
 
+    /// <summary>
+    /// 活性化イベント
+    /// </summary>
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        for (int i = 0; i < radioButtons.Length; i++)
+        {
+            radioButtons[i].interactable = (i != inputValue);
+        }
     }
 }
