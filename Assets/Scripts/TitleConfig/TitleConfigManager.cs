@@ -74,13 +74,8 @@ public class TitleConfigManager : MonoBehaviour
     {
         try
         {
-            // Debug.Log("INFO");
-            // Debug.Log(configs);
-            // Debug.Log(configs.Length);
             foreach (ConfigBase config in configs)
             {
-                // Debug.Log("Config  " + config + " : " + config.GetValue() + ":" + config.GetKey());
-
                 PlayerPrefs.SetInt(config.GetKey(), config.GetValue());
             }
             PlayerPrefs.Save();
@@ -88,18 +83,6 @@ public class TitleConfigManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError(e);
-        }
-        showSavedValue();
-    }
-
-    /// <summary>
-    /// 保存した設定の確認用（一時的に実装）
-    /// </summary>
-    public void showSavedValue()
-    {
-        foreach (string key in ConfigStatus.ConfigKeys)
-        {
-            Debug.Log(key + ':' + PlayerPrefs.GetInt(key, -1));
         }
     }
 }
