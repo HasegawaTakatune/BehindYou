@@ -140,6 +140,8 @@ public class DisplayMssage : MonoBehaviour
 
     private void Start()
     {
+        // シナリオを取得する
+        // 最初にファイル名を指定し、その後にシナリオの配列位置を指定して取得する
         string json = Resources.Load<TextAsset>("Json/HelloScenario").ToString();
         chapter = JsonUtility.FromJson<Chapter>(json);
         scenario = chapter.scenario[0];
