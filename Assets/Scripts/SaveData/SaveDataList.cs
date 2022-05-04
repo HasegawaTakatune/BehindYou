@@ -1,0 +1,49 @@
+using UnityEngine;
+
+using Configs;
+
+public class SaveDataList : MonoBehaviour
+{
+    /// <summary>
+    /// セーブデータの要素数
+    /// </summary>
+    const int LENGTH = 8;
+
+    /// <summary>
+    /// セーブ制御
+    /// </summary>
+    [SerializeField] private SavedStatus.CONTROL control = default;
+
+    /// <summary>
+    /// セーブデータリスト
+    /// </summary>
+    // [SerializeField] private List<SavedContent> savedList = new List<SavedContent>(LENGTH);
+
+    /// <summary>
+    /// セーブデータのプレファブ
+    /// </summary>
+    [SerializeField] private GameObject prefab = default;
+
+    /// <summary>
+    /// セーブデータコンテンツ
+    /// </summary>
+    [SerializeField] private Transform contents = default;
+
+    /// <summary>
+    /// オブジェクト活性イベント
+    /// </summary>
+    private void OnEnable()
+    {
+        foreach (Transform child in contents)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < LENGTH; i++)
+        {
+            GameObject obj = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity, contents);
+            SavedContent sc = obj.GetComponent<SavedContent>();
+            sc.Init(i.ToString(), control);
+        }
+    }
+}
