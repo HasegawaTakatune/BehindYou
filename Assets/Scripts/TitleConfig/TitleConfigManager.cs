@@ -16,6 +16,8 @@ public class TitleConfigManager : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject configPanel = default;
 
+    [SerializeField] private GameObject loadSavePanel = default;
+
     /// <summary>
     /// 設定リスト
     /// </summary>
@@ -24,7 +26,7 @@ public class TitleConfigManager : MonoBehaviour
     /// <summary>
     /// ゲームスタートイベント
     /// </summary>
-    public void onStartGame()
+    public void OnStartGame()
     {
         SceneManager.LoadScene("SampleScene");
     }
@@ -32,15 +34,16 @@ public class TitleConfigManager : MonoBehaviour
     /// <summary>
     /// ゲームロードイベント
     /// </summary>
-    public void onLoadGame()
+    public void OnLoadGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        loadSavePanel.SetActive(true);
+        titlePanel.SetActive(false);
     }
 
     /// <summary>
     /// 設定表示イベント
     /// </summary>
-    public void onConfigOpen()
+    public void OnConfigOpen()
     {
         configPanel.SetActive(true);
         titlePanel.SetActive(false);
@@ -49,7 +52,7 @@ public class TitleConfigManager : MonoBehaviour
     /// <summary>
     /// 設定とじるイベント
     /// </summary>
-    public void onConfigClose()
+    public void OnConfigClose()
     {
         titlePanel.SetActive(true);
         configPanel.SetActive(false);
@@ -58,7 +61,7 @@ public class TitleConfigManager : MonoBehaviour
     /// <summary>
     /// ゲーム終了イベント
     /// </summary>
-    public void onExitGame()
+    public void OnExitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -70,7 +73,7 @@ public class TitleConfigManager : MonoBehaviour
     /// <summary>
     /// 設定の保存ボタン
     /// </summary>
-    public void onClickSaveConfig()
+    public void OnSaveConfig()
     {
         try
         {
@@ -84,5 +87,15 @@ public class TitleConfigManager : MonoBehaviour
         {
             Debug.LogError(e);
         }
+    }
+
+    /// <summary>
+    /// 戻るボタン
+    /// </summary>
+    public void OnReturn()
+    {
+        titlePanel.SetActive(true);
+        configPanel.SetActive(false);
+        loadSavePanel.SetActive(false);
     }
 }

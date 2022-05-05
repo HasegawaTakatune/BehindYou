@@ -11,7 +11,7 @@ public class SelecterItem : ConfigBase
     /// <summary>
     /// 選択イベント
     /// </summary>
-    public void onSelectorChanged()
+    public void OnSelectorChanged()
     {
         inputValue = dropdown.value;
     }

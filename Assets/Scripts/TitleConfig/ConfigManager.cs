@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using Configs;
@@ -47,7 +45,7 @@ public class ConfigManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            initConfig();
+            InitConfig();
         }
         else
         {
@@ -58,7 +56,7 @@ public class ConfigManager : MonoBehaviour
     /// <summary>
     /// 設定の初期化
     /// </summary>
-    private void initConfig()
+    private void InitConfig()
     {
         try
         {

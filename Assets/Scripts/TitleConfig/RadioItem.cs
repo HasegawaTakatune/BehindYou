@@ -12,7 +12,7 @@ public class RadioItem : ConfigBase
     /// ラジオボタンイベント
     /// </summary>
     /// <param name="index"></param>
-    public void onClickedRadio(int index)
+    public void OnClickedRadio(int index)
     {
         for (int i = 0; i < radioButtons.Length; i++)
         {

@@ -16,7 +16,7 @@ public class SliderItem : ConfigBase
     /// <summary>
     /// スライダー入力イベント
     /// </summary>
-    public void onSliderChenged()
+    public void OnSliderChenged()
     {
         inputText.text = inputSlider.value.ToString();
         inputValue = (int)inputSlider.value;
@@ -25,7 +25,7 @@ public class SliderItem : ConfigBase
     /// <summary>
     /// テキスト入力イベント
     /// </summary>
-    public void onInputChenged()
+    public void OnInputChenged()
     {
         int value = int.Parse(inputText.text);
         inputSlider.value = value;
