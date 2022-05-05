@@ -115,7 +115,7 @@ public class SavedContent : MonoBehaviour
     /// <summary>
     /// コンテントクリックイベント
     /// </summary>
-    public void OnClickSaveData()
+    public void OnSaveData()
     {
         switch (control)
         {

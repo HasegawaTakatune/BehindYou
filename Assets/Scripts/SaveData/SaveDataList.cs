@@ -15,11 +15,6 @@ public class SaveDataList : MonoBehaviour
     [SerializeField] private SavedStatus.CONTROL control = default;
 
     /// <summary>
-    /// セーブデータリスト
-    /// </summary>
-    // [SerializeField] private List<SavedContent> savedList = new List<SavedContent>(LENGTH);
-
-    /// <summary>
     /// セーブデータのプレファブ
     /// </summary>
     [SerializeField] private GameObject prefab = default;
@@ -28,6 +23,11 @@ public class SaveDataList : MonoBehaviour
     /// セーブデータコンテンツ
     /// </summary>
     [SerializeField] private Transform contents = default;
+
+    /// <summary>
+    /// セーブデータがない場合のテキスト表示
+    /// </summary>
+    [SerializeField] private GameObject NotSaveDataText = default;
 
     /// <summary>
     /// オブジェクト活性イベント
@@ -39,11 +39,19 @@ public class SaveDataList : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
+        bool exists = false;
         for (int i = 0; i < LENGTH; i++)
         {
             GameObject obj = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity, contents);
             SavedContent sc = obj.GetComponent<SavedContent>();
-            sc.Init(i.ToString(), control);
+            bool result = sc.Init(i.ToString(), control);
+            if (control == SavedStatus.CONTROL.LOAD && !result)
+            {
+                obj.SetActive(false);
+            }
+            else exists = true;
         }
+
+        NotSaveDataText.SetActive(control == SavedStatus.CONTROL.LOAD && !exists);
     }
 }
