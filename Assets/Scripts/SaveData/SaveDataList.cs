@@ -54,4 +54,21 @@ public class SaveDataList : MonoBehaviour
 
         NotSaveDataText.SetActive(control == SavedStatus.CONTROL.LOAD && !exists);
     }
+
+    public void OnLoad()
+    {
+        control = SavedStatus.CONTROL.LOAD;
+        gameObject.SetActive(true);
+    }
+
+    public void OnSave()
+    {
+        control = SavedStatus.CONTROL.SAVE;
+        gameObject.SetActive(true);
+    }
+
+    public void OnCancel()
+    {
+        gameObject.SetActive(false);
+    }
 }

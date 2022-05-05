@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using Configs;
-
 public class TitleConfigManager : MonoBehaviour
 {
     /// <summary>
@@ -16,8 +14,6 @@ public class TitleConfigManager : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject configPanel = default;
 
-    [SerializeField] private GameObject loadSavePanel = default;
-
     /// <summary>
     /// 設定リスト
     /// </summary>
@@ -28,6 +24,8 @@ public class TitleConfigManager : MonoBehaviour
     /// </summary>
     public void OnStartGame()
     {
+        GameManager.chapter = GameManager.FIRST_CHAPTER;
+        GameManager.scenario = 0;
         SceneManager.LoadScene("SampleScene");
     }
 
@@ -36,7 +34,6 @@ public class TitleConfigManager : MonoBehaviour
     /// </summary>
     public void OnLoadGame()
     {
-        loadSavePanel.SetActive(true);
         titlePanel.SetActive(false);
     }
 
@@ -96,6 +93,5 @@ public class TitleConfigManager : MonoBehaviour
     {
         titlePanel.SetActive(true);
         configPanel.SetActive(false);
-        loadSavePanel.SetActive(false);
     }
 }

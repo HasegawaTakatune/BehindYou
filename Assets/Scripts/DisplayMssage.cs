@@ -34,20 +34,17 @@ public class DisplayMssage : MonoBehaviour
     /// <summary>
     /// 背景画像インスタンス
     /// </summary>
-    [SerializeField]
-    private Image backgroundImage = default;
+    [SerializeField] private Image backgroundImage = default;
 
     /// <summary>
     /// キャラクターパネル
     /// </summary>
-    [SerializeField]
-    private GameObject characterPanel = default;
+    [SerializeField] private GameObject characterPanel = default;
 
     /// <summary>
     /// 名前ウィンドウ
     /// </summary>
-    [SerializeField]
-    private Text nameWindow = default;
+    [SerializeField] private Text nameWindow = default;
 
     /// <summary>
     /// 名前パネル
@@ -58,14 +55,12 @@ public class DisplayMssage : MonoBehaviour
     /// <summary>
     /// メッセージウィンドウ
     /// </summary>
-    [SerializeField]
-    private Text messageWindow = default;
+    [SerializeField] private Text messageWindow = default;
 
     /// <summary>
     /// メッセージパネル
     /// </summary>
-    [SerializeField]
-    private GameObject messagePanel = default;
+    // [SerializeField] private GameObject messagePanel = default;
 
     /// <summary>
     /// コンテンツインデックス
@@ -75,26 +70,22 @@ public class DisplayMssage : MonoBehaviour
     /// <summary>
     /// 選択肢パネル
     /// </summary>
-    [SerializeField]
-    private GameObject choicesPanel = default;
+    [SerializeField] private GameObject choicesPanel = default;
 
     /// <summary>
     /// BGMオーディオソース
     /// </summary>
-    [SerializeField]
-    private AudioSource bgmAudio = default;
+    [SerializeField] private AudioSource bgmAudio = default;
 
     /// <summary>
     /// SEオーディオソース群（ジュークボックス）
     /// </summary>
-    [SerializeField]
-    private GameObject jukebox = default;
+    [SerializeField] private GameObject jukebox = default;
 
     /// <summary>
     /// フェードオブジェクト
     /// </summary>
-    [SerializeField]
-    private Fade fade = default;
+    [SerializeField] private Fade fade = default;
 
     /// <summary>
     /// SEオーディオリスト
@@ -138,17 +129,23 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     private Queue<char> charQueue;
 
+    /// <summary>
+    /// 初期化
+    /// </summary>
     private void Start()
     {
         // シナリオを取得する
         // 最初にファイル名を指定し、その後にシナリオの配列位置を指定して取得する
-        string json = Resources.Load<TextAsset>("Json/HelloScenario").ToString();
+        string json = Resources.Load<TextAsset>($"Json/{GameManager.chapter}").ToString();
         chapter = JsonUtility.FromJson<Chapter>(json);
-        scenario = chapter.scenario[0];
+        scenario = chapter.scenario[GameManager.scenario];
 
         SetContent();
     }
 
+    /// <summary>
+    /// ループイベント
+    /// </summary>
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -179,6 +176,8 @@ public class DisplayMssage : MonoBehaviour
         messageWindow.text = "";
         nameWindow.text = "";
 
+        // シナリオの要素番号を更新
+        GameManager.scenario = index;
         Content content = scenario.content[index];
 
         // 名前表示
@@ -234,6 +233,8 @@ public class DisplayMssage : MonoBehaviour
         // シーン遷移設定
         if (content.IsSetNextScene())
         {
+            // チャプター更新
+            GameManager.chapter = content.nextScene;
             StartCoroutine(LoadScene(content.nextScene));
         }
     }
@@ -250,7 +251,7 @@ public class DisplayMssage : MonoBehaviour
 
             if (image == null)
             {
-                image = Instantiate(Resources.Load<Image>(DIRECTORY_PREFABS + "Character"), characterPanel.transform);
+                image = Instantiate(Resources.Load<Image>($"{DIRECTORY_PREFABS}Character"), characterPanel.transform);
                 image.name = chara.name;
                 characterImages.Add(image);
             }
@@ -306,7 +307,7 @@ public class DisplayMssage : MonoBehaviour
 
         foreach (Choices choice in choices)
         {
-            Button button = Instantiate(Resources.Load<Button>(DIRECTORY_PREFABS + "ChoiceButton"), choicesPanel.transform);
+            Button button = Instantiate(Resources.Load<Button>($"{DIRECTORY_PREFABS}ChoiceButton"), choicesPanel.transform);
             Text text = button.GetComponentInChildren<Text>();
             text.text = choice.name;
             button.name = choice.name;
@@ -345,7 +346,7 @@ public class DisplayMssage : MonoBehaviour
 
             if (audioSource == null)
             {
-                audioSource = Instantiate(Resources.Load<AudioSource>(DIRECTORY_PREFABS + "SE"), jukebox.transform);
+                audioSource = Instantiate(Resources.Load<AudioSource>($"{DIRECTORY_PREFABS}SE"), jukebox.transform);
                 audioSource.name = ad.name;
                 seAudios.Add(audioSource);
             }

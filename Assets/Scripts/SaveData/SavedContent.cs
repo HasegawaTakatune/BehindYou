@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 using Configs;
 
@@ -21,23 +22,37 @@ public class SavedContent : MonoBehaviour
     /// </summary>
     [SerializeField] private Text savedAtText = default;
 
+    /// <summary>
+    /// チャプター
+    /// </summary>
+    private string chapter = null;
+
+    /// <summary>
+    /// シナリオ
+    /// </summary>
+    private int scenario = -1;
+
+    /// <summary>
+    /// 一覧の要素番号
+    /// </summary>
+    private string index = "";
+
 
     /// <summary>
     /// 初期化
     /// </summary>
-    /// <param name="key">セーブデータの取得キー</param>
+    /// <param name="idx">セーブデータの取得キー</param>
     /// <returns>true：成功 false：失敗</returns>
-    public bool Init(string key, SavedStatus.CONTROL ctrl)
+    public bool Init(string idx, SavedStatus.CONTROL ctrl)
     {
-        string chapter, savedAt;
-        int scenario;
-
+        string savedAt;
         control = ctrl;
+        index = idx;
         try
         {
-            chapter = PlayerPrefs.GetString($"{key}-chapter", null);
-            scenario = PlayerPrefs.GetInt($"{key}-scenario", -1);
-            savedAt = PlayerPrefs.GetString($"{key}-saved-at", null);
+            chapter = PlayerPrefs.GetString($"{index}-chapter", null);
+            scenario = PlayerPrefs.GetInt($"{index}-scenario", -1);
+            savedAt = PlayerPrefs.GetString($"{index}-saved-at", null);
         }
         catch (Exception e)
         {
@@ -45,7 +60,7 @@ public class SavedContent : MonoBehaviour
             return false;
         }
 
-        InitSavedContent(chapter, scenario, savedAt);
+        InitSavedContent(savedAt);
         if (chapter == null || scenario == -1) return false;
 
         return true;
@@ -57,7 +72,7 @@ public class SavedContent : MonoBehaviour
     /// <param name="chapter">チャプター</param>
     /// <param name="scenario">シナリオ</param>
     /// <param name="savedAt">セーブ日付</param>
-    private bool InitSavedContent(string chapter, int scenario, string savedAt)
+    private bool InitSavedContent(string savedAt)
     {
         if (chapter == null || scenario == -1 || savedAt == null)
         {
@@ -76,13 +91,13 @@ public class SavedContent : MonoBehaviour
     /// <summary>
     /// ゲーム進行のセーブ
     /// </summary>
-    /// <param name="key">セーブデータのキー</param>
+    /// <param name="idx">セーブデータのキー</param>
     /// <param name="saveChapter">現在のチャプター</param>
     /// <param name="saveScenario">現在のシナリオ</param>
     /// <returns>true：成功 false：失敗</returns>
-    public bool SaveGame(string key, string saveChapter, int saveScenario)
+    public bool SaveGame()
     {
-        if (String.IsNullOrEmpty(saveChapter)) return false;
+        if (String.IsNullOrEmpty(chapter)) return false;
 
         string savedAt = "";
         try
@@ -98,9 +113,9 @@ public class SavedContent : MonoBehaviour
 
         try
         {
-            PlayerPrefs.SetString($"{key}-chapter", saveChapter);
-            PlayerPrefs.SetInt($"{key}-scenario", saveScenario);
-            PlayerPrefs.SetString($"{key}-saved-at", savedAt);
+            PlayerPrefs.SetString($"{index}-chapter", chapter);
+            PlayerPrefs.SetInt($"{index}-scenario", scenario);
+            PlayerPrefs.SetString($"{index}-saved-at", savedAt);
 
             PlayerPrefs.Save();
         }
@@ -120,11 +135,15 @@ public class SavedContent : MonoBehaviour
         switch (control)
         {
             case SavedStatus.CONTROL.LOAD:
-
+                GameManager.chapter = chapter;
+                GameManager.scenario = scenario;
+                SceneManager.LoadScene("SampleScene");
                 break;
 
             case SavedStatus.CONTROL.SAVE:
-
+                chapter = GameManager.chapter;
+                scenario = GameManager.scenario;
+                SaveGame();
                 break;
 
             default: break;
