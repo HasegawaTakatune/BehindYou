@@ -139,8 +139,11 @@ public class DisplayMssage : MonoBehaviour
         string json = Resources.Load<TextAsset>($"Json/{GameManager.chapter}").ToString();
         chapter = JsonUtility.FromJson<Chapter>(json);
         scenario = chapter.scenario[GameManager.scenario];
+        index = GameManager.contentId;
 
         SetContent();
+
+        GameManager.gameState = GameManager.GAME_STATE.PLAY;
     }
 
     /// <summary>
@@ -148,7 +151,7 @@ public class DisplayMssage : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GameManager.gameState == GameManager.GAME_STATE.PLAY)
         {
             OnClickMouseLeftButton();
         }
@@ -177,7 +180,7 @@ public class DisplayMssage : MonoBehaviour
         nameWindow.text = "";
 
         // シナリオの要素番号を更新
-        GameManager.scenario = index;
+        GameManager.contentId = index;
         Content content = scenario.content[index];
 
         // 名前表示
@@ -379,6 +382,8 @@ public class DisplayMssage : MonoBehaviour
         int idx = chapter.FindScenario2Index(jumpTo);
 
         if (idx == -1) idx = 0;
+        GameManager.contentId = 0;
+        GameManager.scenario = idx;
         index = 0;
         scenario = chapter.scenario[idx];
 
@@ -495,5 +500,21 @@ public class DisplayMssage : MonoBehaviour
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// ゲームストップ
+    /// </summary>
+    public void OnGameStop()
+    {
+        GameManager.gameState = GameManager.GAME_STATE.STOP;
+    }
+
+    /// <summary>
+    /// ゲームプレイ
+    /// </summary>
+    public void OnGamePlay()
+    {
+        GameManager.gameState = GameManager.GAME_STATE.PLAY;
     }
 }

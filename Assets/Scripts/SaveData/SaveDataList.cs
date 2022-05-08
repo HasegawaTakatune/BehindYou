@@ -34,6 +34,7 @@ public class SaveDataList : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
+        GameManager.gameState = GameManager.GAME_STATE.CONFIG;
         foreach (Transform child in contents)
         {
             GameObject.Destroy(child.gameObject);
@@ -55,18 +56,44 @@ public class SaveDataList : MonoBehaviour
         NotSaveDataText.SetActive(control == SavedStatus.CONTROL.LOAD && !exists);
     }
 
+    /// <summary>
+    /// オブジェクト非活性イベント
+    /// </summary>
+    private void OnDisable()
+    {
+        GameManager.gameState = GameManager.GAME_STATE.PLAY;
+        Invoke("CallbackDisable", 2.0f);
+    }
+
+    /// <summary>
+    /// ゲームステートをプレイに更新
+    /// </summary>
+    private void CallbackDisable()
+    {
+        GameManager.gameState = GameManager.GAME_STATE.PLAY;
+    }
+
+    /// <summary>
+    /// ゲームデータロード
+    /// </summary>
     public void OnLoad()
     {
         control = SavedStatus.CONTROL.LOAD;
         gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// ゲームデータセーブ
+    /// </summary>
     public void OnSave()
     {
         control = SavedStatus.CONTROL.SAVE;
         gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// キャンセル
+    /// </summary>
     public void OnCancel()
     {
         gameObject.SetActive(false);

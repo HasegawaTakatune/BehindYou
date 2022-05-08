@@ -33,6 +33,11 @@ public class SavedContent : MonoBehaviour
     private int scenario = -1;
 
     /// <summary>
+    /// コンテンツID
+    /// </summary>
+    private int contentId = -1;
+
+    /// <summary>
     /// 一覧の要素番号
     /// </summary>
     private string index = "";
@@ -52,6 +57,7 @@ public class SavedContent : MonoBehaviour
         {
             chapter = PlayerPrefs.GetString($"{index}-chapter", null);
             scenario = PlayerPrefs.GetInt($"{index}-scenario", -1);
+            contentId = PlayerPrefs.GetInt($"{index}-content-id", -1);
             savedAt = PlayerPrefs.GetString($"{index}-saved-at", null);
         }
         catch (Exception e)
@@ -61,7 +67,7 @@ public class SavedContent : MonoBehaviour
         }
 
         InitSavedContent(savedAt);
-        if (chapter == null || scenario == -1) return false;
+        if (chapter == null || scenario == -1 || contentId == -1) return false;
 
         return true;
     }
@@ -69,12 +75,10 @@ public class SavedContent : MonoBehaviour
     /// <summary>
     /// セーブした進行状況を表示する
     /// </summary>
-    /// <param name="chapter">チャプター</param>
-    /// <param name="scenario">シナリオ</param>
     /// <param name="savedAt">セーブ日付</param>
     private bool InitSavedContent(string savedAt)
     {
-        if (chapter == null || scenario == -1 || savedAt == null)
+        if (chapter == null || scenario == -1 || contentId == -1 || savedAt == null)
         {
             chapterText.text = "- BLANK -";
             savedAtText.text = "プレイ時間：000:000:000";
@@ -91,9 +95,6 @@ public class SavedContent : MonoBehaviour
     /// <summary>
     /// ゲーム進行のセーブ
     /// </summary>
-    /// <param name="idx">セーブデータのキー</param>
-    /// <param name="saveChapter">現在のチャプター</param>
-    /// <param name="saveScenario">現在のシナリオ</param>
     /// <returns>true：成功 false：失敗</returns>
     public bool SaveGame()
     {
@@ -115,6 +116,7 @@ public class SavedContent : MonoBehaviour
         {
             PlayerPrefs.SetString($"{index}-chapter", chapter);
             PlayerPrefs.SetInt($"{index}-scenario", scenario);
+            PlayerPrefs.SetInt($"{index}-content-id", contentId);
             PlayerPrefs.SetString($"{index}-saved-at", savedAt);
 
             PlayerPrefs.Save();
@@ -137,12 +139,14 @@ public class SavedContent : MonoBehaviour
             case SavedStatus.CONTROL.LOAD:
                 GameManager.chapter = chapter;
                 GameManager.scenario = scenario;
+                GameManager.contentId = contentId;
                 SceneManager.LoadScene("SampleScene");
                 break;
 
             case SavedStatus.CONTROL.SAVE:
                 chapter = GameManager.chapter;
                 scenario = GameManager.scenario;
+                contentId = GameManager.contentId;
                 SaveGame();
                 break;
 

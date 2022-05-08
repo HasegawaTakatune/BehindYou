@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadePanel: {fileID: 3233861637571846706}
-  fadeText: {fileID: 3233861638713371973}
+  nowloadText: {fileID: 3233861638713371973}
 --- !u!1 &3233861638713371975
 GameObject:
   m_ObjectHideFlags: 0
