@@ -1,5 +1,17 @@
 using UnityEngine;
 
+public class GameCharacter
+{
+    private string characterPath;
+
+    private int characterPos;
+
+    public GameCharacter()
+    {
+
+    }
+}
+
 public class GameManager : MonoBehaviour
 {
     /// <summary>
@@ -40,6 +52,10 @@ public class GameManager : MonoBehaviour
     /// シナリオID
     /// </summary>
     public static int contentId;
+
+    public static string[] characters;
+
+
 
     /// <summary>
     /// 初期化
